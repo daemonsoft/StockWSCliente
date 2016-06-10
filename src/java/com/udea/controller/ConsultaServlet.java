@@ -35,21 +35,21 @@ public class ConsultaServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String tab = "active";
-        
-        System.out.println(request.getParameter("buscar"));
+        String result;
         if (request.getParameter("buscar") != null) {
             request.setAttribute("tab1", tab);
             try {
                 ProductoWebService_Service service = new ProductoWebService_Service();
                 ProductoWebService port = service.getProductoWebServicePort();
                 // TODO initialize WS operation arguments here
-                java.lang.String codigo = request.getParameter("codigo");
+                String codigo = request.getParameter("codigo");
                 // TODO process result here
                 String cod = port.buscarProducto(codigo).getCodigo();
                 String nom = port.buscarProducto(codigo).getNombre();
                 String des = port.buscarProducto(codigo).getDescripcion();
                 Double pre = port.buscarProducto(codigo).getPrecio();
                 Integer sto = port.buscarProducto(codigo).getStock();
+
                 request.setAttribute("cod", cod);
                 request.setAttribute("nom", nom);
                 request.setAttribute("des", des);
@@ -57,7 +57,8 @@ public class ConsultaServlet extends HttpServlet {
                 request.setAttribute("sto", sto);
                 //out.println("<font color = 'blue'>" + "Resultado de la consulta: " + cod +"</font>");
             } catch (Exception ex) {
-                // TODO handle custom exceptions here
+                result = "No existe el producto";
+                request.setAttribute("msg1", result);
             }
         } else if (request.getParameter("todos") != null) {
             request.setAttribute("tab2", tab);
@@ -65,9 +66,13 @@ public class ConsultaServlet extends HttpServlet {
                 ProductoWebService_Service service = new ProductoWebService_Service();
                 ProductoWebService port = service.getProductoWebServicePort();
                 // TODO process result here
-                List<Producto> result = port.consultarProductos();
-                request.setAttribute("todosP", result);
-
+                List<Producto> resultl = port.consultarProductos();
+                if (resultl.isEmpty()) {
+                    result = "No hay productos para listar";
+                    request.setAttribute("msg2", result);
+                } else {
+                    request.setAttribute("todosP", resultl);
+                }
             } catch (Exception ex) {
                 // TODO handle custom exceptions here
             }
@@ -78,16 +83,17 @@ public class ConsultaServlet extends HttpServlet {
                 ProductoWebService_Service service = new ProductoWebService_Service();
                 ProductoWebService port = service.getProductoWebServicePort();
                 // TODO initialize WS operation arguments here
-                java.lang.String codigo = request.getParameter("codigoi");
-                java.lang.String nombre = request.getParameter("nombre");
+                String codigo = request.getParameter("codigoi");
+                String nombre = request.getParameter("nombre");
                 double precio = Double.parseDouble(request.getParameter("precio"));
                 int stock = Integer.parseInt(request.getParameter("stock"));
-                java.lang.String descripcion = request.getParameter("descripcion");
+                String descripcion = request.getParameter("descripcion");
                 // TODO process result here
-                java.lang.String result = port.ingresarProducto(codigo, nombre, precio, stock, descripcion);
-                request.setAttribute("result", result);
+                result = port.ingresarProducto(codigo, nombre, precio, stock, descripcion);
+                request.setAttribute("msg3", result);
             } catch (Exception ex) {
-                request.setAttribute("result", "Debe ingresar los datos correctamente");
+                result = "Debe ingresar los datos correctamente";
+                request.setAttribute("msg3", result);
             }
         } else if (request.getParameter("borrar") != null) {
             request.setAttribute("tab4", tab);
@@ -97,10 +103,11 @@ public class ConsultaServlet extends HttpServlet {
                 // TODO initialize WS operation arguments here
                 java.lang.String codigo = request.getParameter("codigob");
                 // TODO process result here
-                java.lang.String result = port.borrarProducto(codigo);
-                request.setAttribute("result", result);
+                result = port.borrarProducto(codigo);
+                request.setAttribute("msg4", result);
             } catch (Exception ex) {
-                // TODO handle custom exceptions here
+                result = "No existe el producto";
+                request.setAttribute("msg4", result);
             }
         } else if (request.getParameter("buscara") != null) {
             request.setAttribute("tab5", tab);
@@ -108,13 +115,13 @@ public class ConsultaServlet extends HttpServlet {
                 ProductoWebService_Service service = new ProductoWebService_Service();
                 ProductoWebService port = service.getProductoWebServicePort();
 
-                java.lang.String codigo = request.getParameter("codigoa");
+                String codigo = request.getParameter("codigoa");
                 // TODO process result here
+                String nom = port.buscarProducto(codigo).getNombre();
+                String des = port.buscarProducto(codigo).getDescripcion();
+                Double pre = port.buscarProducto(codigo).getPrecio();
+                Integer sto = port.buscarProducto(codigo).getStock();
 
-                java.lang.String nom = port.buscarProducto(codigo).getNombre();
-                java.lang.String des = port.buscarProducto(codigo).getDescripcion();
-                java.lang.Double pre = port.buscarProducto(codigo).getPrecio();
-                java.lang.Integer sto = port.buscarProducto(codigo).getStock();
                 request.setAttribute("coda", codigo);
                 request.setAttribute("noma", nom);
                 request.setAttribute("desa", des);
@@ -123,7 +130,8 @@ public class ConsultaServlet extends HttpServlet {
                 // TODO process result here
 
             } catch (Exception ex) {
-                // TODO handle custom exceptions here
+                result = "No existe el producto";
+                request.setAttribute("msg5", result);
             }
         } else if (request.getParameter("actualizar") != null) {
             request.setAttribute("tab5", tab);
@@ -136,8 +144,8 @@ public class ConsultaServlet extends HttpServlet {
                 String stock = request.getParameter("stock");
                 String descripcion = request.getParameter("descripcion");
 
-                String result = port.actualizarProducto(codigo, nombre, Double.parseDouble(precio), Integer.parseInt(stock), descripcion);
-                request.setAttribute("result", result);
+                result = port.actualizarProducto(codigo, nombre, Double.parseDouble(precio), Integer.parseInt(stock), descripcion);
+                request.setAttribute("msg5", result);
 
             } catch (Exception ex) {
                 // TODO handle custom exceptions here

@@ -34,8 +34,8 @@
                     </ul>
                 </div>
                 <div id="t1" class="col s12">
-
                     <h3 class="center-align">Buscar producto</h3>
+                    <h4 class="center-align">${msg1}</h4>
                     <form action="./ConsultaServlet" method="POST">
                         <table>
                             <tr>
@@ -46,79 +46,80 @@
                                 <td colspan="2"><input class="waves-effect red lighten-1 right waves-light btn" type="submit" name = "buscar" value="Buscar"/></td>
                             </tr>
                         </table>
-
                         <c:if test="${cod!=null}" >
-                            <table class="responsive-table">
-
-
-                                <tbody>
-                                    <tr>
-                                        <td><b>Código:</b></td>
-                                        <td>${cod}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Nombre:</b></td>
-                                        <td>${nom}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Precio:</b></td>
-                                        <td>${pre}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Stock:</b></td>
-                                        <td>${sto}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Descripción:</b></td>
-                                        <td>${des}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
+                            <div class="row">
+                                <div class="col s12 offset-l2 l8">
+                                    <div class="card-panel center">
+                                        <table class="responsive-table">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="right-align"><b>Código:</b></td>
+                                                    <td >${cod}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="right-align"><b>Nombre:</b></td>
+                                                    <td>${nom}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="right-align"><b>Precio:</b></td>
+                                                    <td>${pre}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="right-align"><b>Stock:</b></td>
+                                                    <td>${sto}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="right-align"><b>Descripción:</b></td>
+                                                    <td>${des}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </c:if>
                     </form>
 
                 </div>
                 <div id="t2" class="col s12">
-
                     <h3 class="center-align">Listar todos los productos</h3>
+                    <h4 class="center-align">${msg2}</h4>
                     <form action="./ConsultaServlet" method="POST">
                         <table>
 
                             <tr>
                                 <td colspan="2"><input class="waves-effect red lighten-1 right waves-light btn" type="submit" name="todos" value="Listar Todos"/></td>
                             </tr>
-                            
+
                         </table>
                         <c:if test="${todosP!=null}">
-                        <table class="responsive-table">
-                            <thead>
-                            <th>codigo</th>
-                            <th>nombre</th>
-                            <th>precio</th>            
-                            <th>stock</th>
-                            <th>descripcion</th>
-
-                            </thead>
-                            <tbody>
-                                <c:forEach items="${todosP}" var="c">
-                                    <tr>    
-                                        <td>${c.codigo}</td>
-                                        <td>${c.nombre}</td>
-                                        <td>${c.precio}</td>
-                                        <td>${c.stock}</td>
-                                        <td>${c.descripcion}</td>                            
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
+                            <table class="responsive-table centered highlight">
+                                <thead>
+                                <th>Código</th>
+                                <th>Nombre</th>
+                                <th>Precio</th>            
+                                <th>Stock</th>
+                                <th>Descripción</th>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${todosP}" var="c">
+                                        <tr>    
+                                            <td>${c.codigo}</td>
+                                            <td>${c.nombre}</td>
+                                            <td>${c.precio}</td>
+                                            <td>${c.stock}</td>
+                                            <td>${c.descripcion}</td>                            
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
                         </c:if>
                     </form>
 
                 </div>
                 <div id="t3" class="col s12">
-
                     <h3 class="center-align">Ingresar producto</h3>
+                    <h4 class="center-align">${msg3}</h4>
                     <form action="./ConsultaServlet" method="POST">
 
                         <table class="responsive-table">
@@ -149,9 +150,8 @@
                     </form>
                 </div>
                 <div id="t4" class="col s12">
-
-
                     <h3 class="center-align">Eliminar producto</h3>
+                    <h4 class="center-align">${msg4}</h4>
                     <form action="./ConsultaServlet" method="POST">
                         <table class="responsive-table">
                             <tr>
@@ -166,8 +166,8 @@
 
                 </div>
                 <div id="t5" class="col s12">
-
                     <h3 class="center-align">Actualizar producto</h3>
+                    <h4 class="center-align">${msg5}</h4>
                     <form action="./ConsultaServlet" method="POST">
                         <table>
                             <tr>
