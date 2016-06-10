@@ -22,93 +22,76 @@
         <title>Producto Web Service</title>
     </head>
     <body>
-        <div class="container">
+        <div class="container red-text text-lighten-1">
             <div class="row">
                 <div class="col s12">
                     <ul class="tabs">
-                        <li class="tab col s3"><a <c:if test="${tab=null}"> class="active"</c:if> href="#t1">Buscar</a></li>
-                        <li class="tab col s3"><a <c:if test="${tab="lis"}"> class="active"</c:if> href="#t2">Listar Productos</a></li>
-                        <li class="tab col s3"><a <c:if test="${tab="ing"}"> class="active"</c:if> href="#t3">Ingresar</a></li>
-                        <li class="tab col s3"><a <c:if test="${tab="eli"}"> class="active"</c:if> href="#t4">Eliminar</a></li>
-                        <li class="tab col s3"><a <c:if test="${tab='act'}"> class="active"</c:if> href="#t5">Actualizar</a></li>
-                        </ul>
-                    </div>
-                    <div id="t1" class="col s12">
-                    <%-- start web service invocation --%>
-                    <%if (request.getParameter("buscar") != null) {
-                            request.setAttribute("tab", null);
-                            try {
-                                com.udea.servicio.ProductoWebService_Service service = new com.udea.servicio.ProductoWebService_Service();
-                                com.udea.servicio.ProductoWebService port = service.getProductoWebServicePort();
-                                // TODO initialize WS operation arguments here
-                                java.lang.String codigo = request.getParameter("codigo");
-                                // TODO process result here
-                                java.lang.String cod = port.buscarProducto(codigo).getCodigo();
-                                java.lang.String nom = port.buscarProducto(codigo).getNombre();
-                                java.lang.String des = port.buscarProducto(codigo).getDescripcion();
-                                java.lang.Double pre = port.buscarProducto(codigo).getPrecio();
-                                java.lang.Integer sto = port.buscarProducto(codigo).getStock();
-                                request.setAttribute("cod", cod);
-                                request.setAttribute("nom", nom);
-                                request.setAttribute("des", des);
-                                request.setAttribute("pre", pre);
-                                request.setAttribute("sto", sto);
-                                //out.println("<font color = 'blue'>" + "Resultado de la consulta: " + cod +"</font>");
-                            } catch (Exception ex) {
-                                // TODO handle custom exceptions here
-                            }
-                        }
-                    %>
-                    <%-- end web service invocation --%>
+                        <li class="tab col s3"><a class="${tab1}" href="#t1">Buscar</a></li>
+                        <li class="tab col s3"><a class="${tab2}" href="#t2">Listar Productos</a></li>
+                        <li class="tab col s3"><a class="${tab3}" href="#t3">Ingresar</a></li>
+                        <li class="tab col s3"><a class="${tab4}" href="#t4">Eliminar</a></li>
+                        <li class="tab col s3"><a class="${tab5}" href="#t5">Actualizar</a></li>
+                    </ul>
+                </div>
+                <div id="t1" class="col s12">
+
                     <h3 class="center-align">Buscar producto</h3>
-                    <form action="consulta.jsp" method="POST">
+                    <form action="./ConsultaServlet" method="POST">
                         <table>
                             <tr>
                                 <th>Codigo:</th>
                                 <td><input type="text" name="codigo" required/></td>
                             </tr>
                             <tr>
-                                <td colspan="2"><input type="submit" name = "buscar" value="Buscar"/></td>
+                                <td colspan="2"><input class="waves-effect red lighten-1 right waves-light btn" type="submit" name = "buscar" value="Buscar"/></td>
                             </tr>
                         </table>
-                        <c:if test="${cod!=null}" >                
-                            Código: ${cod} <br>
-                            Nombre: ${nom}<br>
-                            Precio: ${pre}<br>        
-                            Stock: ${sto}<br>
-                            Descripción: ${des}<br>
+
+                        <c:if test="${cod!=null}" >
+                            <table class="responsive-table">
+
+
+                                <tbody>
+                                    <tr>
+                                        <td><b>Código:</b></td>
+                                        <td>${cod}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Nombre:</b></td>
+                                        <td>${nom}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Precio:</b></td>
+                                        <td>${pre}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Stock:</b></td>
+                                        <td>${sto}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Descripción:</b></td>
+                                        <td>${des}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
                         </c:if>
                     </form>
 
                 </div>
                 <div id="t2" class="col s12">
 
-                    <%-- start web service invocation --%>
-                    <%if (request.getParameter("todos") != null) {
-                            request.setAttribute("tab", "lis");
-                            try {
-                                com.udea.servicio.ProductoWebService_Service service = new com.udea.servicio.ProductoWebService_Service();
-                                com.udea.servicio.ProductoWebService port = service.getProductoWebServicePort();
-                                // TODO process result here
-                                java.util.List<com.udea.servicio.Producto> result = port.consultarProductos();
-                                request.setAttribute("todosP", result);
-
-                            } catch (Exception ex) {
-                                // TODO handle custom exceptions here
-                            }
-                        }
-                    %>
-                    <%-- end web service invocation --%>
-
                     <h3 class="center-align">Listar todos los productos</h3>
-                    <form action="consulta.jsp" method="POST">
+                    <form action="./ConsultaServlet" method="POST">
                         <table>
 
                             <tr>
-                                <td colspan="2"><input type="submit" name="todos" value="Listar Todos"/></td>
+                                <td colspan="2"><input class="waves-effect red lighten-1 right waves-light btn" type="submit" name="todos" value="Listar Todos"/></td>
                             </tr>
+                            
                         </table>
-                        <table >
+                        <c:if test="${todosP!=null}">
+                        <table class="responsive-table">
                             <thead>
                             <th>codigo</th>
                             <th>nombre</th>
@@ -129,35 +112,16 @@
                                 </c:forEach>
                             </tbody>
                         </table>
+                        </c:if>
                     </form>
 
                 </div>
                 <div id="t3" class="col s12">
-                    <%-- start web service invocation --%>
-                    <%if (request.getParameter("ingresar") != null) {
-                            request.setAttribute("tab", "ing");
-                            try {
-                                com.udea.servicio.ProductoWebService_Service service = new com.udea.servicio.ProductoWebService_Service();
-                                com.udea.servicio.ProductoWebService port = service.getProductoWebServicePort();
-                                // TODO initialize WS operation arguments here
-                                java.lang.String codigo = request.getParameter("codigoi");
-                                java.lang.String nombre = request.getParameter("nombre");
-                                double precio = Double.parseDouble(request.getParameter("precio"));
-                                int stock = Integer.parseInt(request.getParameter("stock"));
-                                java.lang.String descripcion = request.getParameter("descripcion");
-                                // TODO process result here
-                                java.lang.String result = port.ingresarProducto(codigo, nombre, precio, stock, descripcion);
-                                out.println("<font color = 'blue'>" + result + "</font>");
-                            } catch (Exception ex) {
-                                out.println("<font color = 'red'>" + "Debe ingresar los datos correctamente" + ex + "</font>");
-                            }
-                        }
-                    %>
-                    <%-- end web service invocation --%>
-                    <h3 class="center-align">Ingresar producto</h3>
-                    <form action="consulta.jsp" method="POST">
 
-                        <table>
+                    <h3 class="center-align">Ingresar producto</h3>
+                    <form action="./ConsultaServlet" method="POST">
+
+                        <table class="responsive-table">
                             <tr>
                                 <th>Codigo:</th>
                                 <td><input type="text" name="codigoi" required/></td>
@@ -179,103 +143,43 @@
                                 <td><input type="text" name="descripcion" required/></td>
                             </tr>
                             <tr>
-                                <td colspan="2"><input type="submit" name="ingresar" value="Ingresar"/></td>
+                                <td colspan="2"><input class="waves-effect red lighten-1 right waves-light btn" type="submit" name="ingresar" value="Ingresar"/></td>
                             </tr>
                         </table>
                     </form>
                 </div>
                 <div id="t4" class="col s12">
 
-                    <%-- start web service invocation --%>
-                    <%if (request.getParameter("borrar") != null) {
-                            request.setAttribute("tab", "eli");
-                            try {
-                                com.udea.servicio.ProductoWebService_Service service = new com.udea.servicio.ProductoWebService_Service();
-                                com.udea.servicio.ProductoWebService port = service.getProductoWebServicePort();
-                                // TODO initialize WS operation arguments here
-                                java.lang.String codigo = request.getParameter("codigob");
-                                // TODO process result here
-                                java.lang.String result = port.borrarProducto(codigo);
-                                out.println("<font color = 'blue'>" + result + "</font>");
-                            } catch (Exception ex) {
-                                // TODO handle custom exceptions here
-                            }
-                        }%>
-                    <%-- end web service invocation --%>
+
                     <h3 class="center-align">Eliminar producto</h3>
-                    <form action="consulta.jsp" method="POST">
-                        <table>
+                    <form action="./ConsultaServlet" method="POST">
+                        <table class="responsive-table">
                             <tr>
                                 <th>Codigo:</th>
                                 <td><input type="text" name="codigob" required/></td>
                             </tr>
                             <tr>
-                                <td colspan="2"><input type="submit" name = "borrar" value="Eliminar"/></td>
+                                <td colspan="2"><input class="waves-effect red lighten-1 right waves-light btn" type="submit" name = "borrar" value="Eliminar"/></td>
                             </tr>
                         </table>
                     </form>
 
                 </div>
                 <div id="t5" class="col s12">
-                    <%-- start web service invocation --%>
-                    <%if (request.getParameter("buscara") != null) {
-                            request.setAttribute("tab", "act");
-                            try {
-                                com.udea.servicio.ProductoWebService_Service service = new com.udea.servicio.ProductoWebService_Service();
-                                com.udea.servicio.ProductoWebService port = service.getProductoWebServicePort();
-                                // TODO initialize WS operation arguments here
-                                java.lang.String codigo = request.getParameter("codigoa");
-                                // TODO process result here
-
-                                java.lang.String nom = port.buscarProducto(codigo).getNombre();
-                                java.lang.String des = port.buscarProducto(codigo).getDescripcion();
-                                java.lang.Double pre = port.buscarProducto(codigo).getPrecio();
-                                java.lang.Integer sto = port.buscarProducto(codigo).getStock();
-                                out.println(nom + "  este es l cod");
-                                request.setAttribute("coda", codigo);
-                                request.setAttribute("noma", nom);
-                                request.setAttribute("desa", des);
-                                request.setAttribute("prea", pre);
-                                request.setAttribute("stoa", sto);
-                                // TODO process result here
-
-                            } catch (Exception ex) {
-                                // TODO handle custom exceptions here
-                            }
-                        } else if (request.getParameter("actualizar") != null) {
-                            request.setAttribute("tab", "act");
-                            try {
-                                com.udea.servicio.ProductoWebService_Service service = new com.udea.servicio.ProductoWebService_Service();
-                                com.udea.servicio.ProductoWebService port = service.getProductoWebServicePort();
-                                java.lang.String codigo = request.getParameter("codigoac");
-                                java.lang.String nombre = request.getParameter("nombre");
-                                java.lang.String precio = request.getParameter("precio");
-                                java.lang.String stock = request.getParameter("stock");
-                                java.lang.String descripcion = request.getParameter("descripcion");
-
-                                java.lang.String result = port.actualizarProducto(codigo, nombre, Double.parseDouble(precio), Integer.parseInt(stock), descripcion);
-                                out.println(result);
-
-                            } catch (Exception ex) {
-                                // TODO handle custom exceptions here
-                            }
-                        }
-                    %>
-                    <%-- end web service invocation --%>
 
                     <h3 class="center-align">Actualizar producto</h3>
-                    <form action="consulta.jsp" method="POST">
+                    <form action="./ConsultaServlet" method="POST">
                         <table>
                             <tr>
                                 <th>Codigo:</th>
                                 <td><input type="text" name="codigoa" <c:if test="${coda==null}">required</c:if>/></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2"><input type="submit" name = "buscara" value="Buscar"/></td>
+                                    <td colspan="2"><input class="waves-effect red lighten-1 right waves-light btn" type="submit" name = "buscara" value="Buscar"/></td>
                                 </tr>
                             </table>
                         <c:if test="${coda!=null}">
-                            <table >
+                            <table class="responsive-table">
                                 <tr>
                                     <th>Codigo:</th>
                                     <td><input type="text" name="codigoac" readonly="readonly" value="${coda}" required/></td>
@@ -284,20 +188,20 @@
                                     <th>Nombre:</th>
                                     <td><input type="text" name="nombre" value="${noma}" required/></td>
                                 </tr>
-
-                                <th>Precio:</th>
-                                <td><input type="number"  step="any" value="${Double.parseDouble(prea)}" name="precio" required/></td>
-
+                                <tr>
+                                    <th>Precio:</th>
+                                    <td><input type="number"  step="any" min="0" value="${Double.parseDouble(prea)}" name="precio"/></td>
+                                </tr>
                                 <tr>
                                     <th>Stock:</th>
-                                    <td><input type="number" name="stock" value="${Integer.parseInt(stoa)}" required/></td>
+                                    <td><input type="number" name="stock" value="${Integer.parseInt(stoa)}" required /></td>
                                 </tr>
                                 <tr>
                                     <th>Descripción:</th>
                                     <td><input type="text" name="descripcion" value="${desa}" required/></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2"><input type="submit" name="actualizar" value="Actualizar"/></td>
+                                    <td colspan="2"><input class="waves-effect red lighten-1 right waves-light btn" type="submit" name="actualizar" value="Actualizar"/></td>
                                 </tr>
                             </table>
                         </c:if>
@@ -305,10 +209,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="js/materialize.min.js"></script>
         <script type="text/javascript">
