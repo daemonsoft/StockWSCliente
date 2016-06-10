@@ -123,11 +123,11 @@
                             </tr>
                             <tr>
                                 <th>Precio:</th>
-                                <td><input type="number"  step="any" name="precio" required/></td>
+                                <td><input type="number"  step="any" min="0" name="precio" required/></td>
                             </tr>
                             <tr>
                                 <th>Stock:</th>
-                                <td><input type="number" name="stock" required/></td>
+                                <td><input type="number" name="stock" min="0" required/></td>
                             </tr>
                             <tr>
                                 <th>Descripción:</th>
@@ -183,7 +183,7 @@
                                 </tr>
                                 <tr>
                                     <th>Stock:</th>
-                                    <td><input type="number" name="stock" value="${Integer.parseInt(stoa)}" required /></td>
+                                    <td><input type="number" name="stock" min="0" value="${Integer.parseInt(stoa)}" required /></td>
                                 </tr>
                                 <tr>
                                     <th>Descripción:</th>
