@@ -25,9 +25,9 @@
         <div class="container red-text text-lighten-1">
             <div class="row">
                 <div class="col s12">
-                    <ul class="tabs">
-                        <li class="tab col s3"><a class="${tab1}" href="#t1">Buscar</a></li>
+                    <ul class="tabs">                        
                         <li class="tab col s3"><a class="${tab2}" href="#t2">Listar Productos</a></li>
+                        <li class="tab col s3"><a class="${tab1}" href="#t1">Buscar</a></li>
                         <li class="tab col s3"><a class="${tab3}" href="#t3">Ingresar</a></li>
                         <li class="tab col s3"><a class="${tab4}" href="#t4">Eliminar</a></li>
                         <li class="tab col s3"><a class="${tab5}" href="#t5">Actualizar</a></li>
@@ -79,19 +79,11 @@
                             </div>
                         </c:if>
                     </form>
-
                 </div>
                 <div id="t2" class="col s12">
-                    <h3 class="center-align">Listar todos los productos</h3>
+                    <h3 class="center-align">Todos los productos</h3>
                     <h4 class="center-align">${msg2}</h4>
                     <form action="./ConsultaServlet" method="POST">
-                        <table>
-
-                            <tr>
-                                <td colspan="2"><input class="waves-effect red lighten-1 right waves-light btn" type="submit" name="todos" value="Listar Todos"/></td>
-                            </tr>
-
-                        </table>
                         <c:if test="${todosP!=null}">
                             <table class="responsive-table centered highlight">
                                 <thead>
@@ -115,13 +107,11 @@
                             </table>
                         </c:if>
                     </form>
-
                 </div>
                 <div id="t3" class="col s12">
                     <h3 class="center-align">Ingresar producto</h3>
                     <h4 class="center-align">${msg3}</h4>
                     <form action="./ConsultaServlet" method="POST">
-
                         <table class="responsive-table">
                             <tr>
                                 <th>Codigo:</th>
@@ -163,7 +153,6 @@
                             </tr>
                         </table>
                     </form>
-
                 </div>
                 <div id="t5" class="col s12">
                     <h3 class="center-align">Actualizar producto</h3>

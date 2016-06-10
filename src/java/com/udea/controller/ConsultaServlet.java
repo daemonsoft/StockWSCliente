@@ -9,7 +9,6 @@ import com.udea.servicio.Producto;
 import com.udea.servicio.ProductoWebService;
 import com.udea.servicio.ProductoWebService_Service;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -59,22 +58,6 @@ public class ConsultaServlet extends HttpServlet {
             } catch (Exception ex) {
                 result = "No existe el producto";
                 request.setAttribute("msg1", result);
-            }
-        } else if (request.getParameter("todos") != null) {
-            request.setAttribute("tab2", tab);
-            try {
-                ProductoWebService_Service service = new ProductoWebService_Service();
-                ProductoWebService port = service.getProductoWebServicePort();
-                // TODO process result here
-                List<Producto> resultl = port.consultarProductos();
-                if (resultl.isEmpty()) {
-                    result = "No hay productos para listar";
-                    request.setAttribute("msg2", result);
-                } else {
-                    request.setAttribute("todosP", resultl);
-                }
-            } catch (Exception ex) {
-                // TODO handle custom exceptions here
             }
         } else if (request.getParameter("ingresar") != null) {
 
@@ -151,6 +134,22 @@ public class ConsultaServlet extends HttpServlet {
                 // TODO handle custom exceptions here
             }
         }
+
+        try {
+            ProductoWebService_Service service = new ProductoWebService_Service();
+            ProductoWebService port = service.getProductoWebServicePort();
+            // TODO process result here
+            List<Producto> resultl = port.consultarProductos();
+            if (resultl.isEmpty()) {
+                result = "No hay productos para mostar";
+                request.setAttribute("msg2", result);
+            } else {
+                request.setAttribute("todosP", resultl);
+            }
+        } catch (Exception ex) {
+            // TODO handle custom exceptions here
+        }
+
         request.getRequestDispatcher("/consulta.jsp").forward(request, response);
     }
 
